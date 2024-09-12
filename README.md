@@ -1,17 +1,27 @@
 # CodeXplain
-Paper:Vulnerability-Hunter: Detecting Reentrancy Vulnerability based on Geometric Perception Attention Neural Network in Smart Contracts
+This repo is a paper of python implementation : From Cryptic to Clear - Training on LLM Explanations to Detect Smart Contract Vulnerabilities
 
 # Task Definition
 Automated detection of smart contract vulnerabilities.
 
-# Dataset
+# Framework
 
-The dataset we use is [SmartBugs Wild Dataset](https://github.com/smartbugs/smartbugs-wild/tree/master/contracts) .
+![The overview of CodeXplain](figs/model.drawio.png)
+
+The overview of our proposed method CodeXplain is illustrated in the Figure, which consists of three modules: 1) Multi-perspective Code Explanation Generation by LLM, and 2) Semantic Fusion for Code and Explanations.
+
+# Datasets
+We use the same dataset as [Ma et al., 202](https://sites.google.com/view/iaudittool/home). Further instructions on the dataset can be found on [Smart-Contract-Dataset](https://drive.google.com/drive/folders/1cAHxSu6dL3S21zz2iaQzSTABfSjY2vP8).
 
 # Runing GPAResNet
 
-Program entrance:
+# Running
+To run program, please use this command: python `run.py`.
 
-```
-python run.py
-```
+Also all the hyper-parameters can be found in `run.py`.
+
+Examples:
+
+`
+python run.py --epoch 50  --batch_szie 16 --max_length 1024
+`
