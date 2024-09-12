@@ -13,8 +13,6 @@ The overview of our proposed method CodeXplain is illustrated in the Figure, whi
 # Datasets
 We use the same dataset as [Ma et al., 202](https://sites.google.com/view/iaudittool/home). Further instructions on the dataset can be found on [Smart-Contract-Dataset](https://drive.google.com/drive/folders/1cAHxSu6dL3S21zz2iaQzSTABfSjY2vP8).
 
-# Runing GPAResNet
-
 # Running
 To run program, please use this command: python `run.py`.
 
