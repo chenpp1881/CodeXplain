@@ -1,0 +1,10 @@
+Below is an instruction that describes a specific perspective of a smart contract.
+
+### Instruction:
+Evaluate the gas efficiency of the following smart contract code. Explain how each operation impacts gas usage and suggest any optimizations.
+
+### Input:
+This is Solidity code:
+```
+{context}
+```

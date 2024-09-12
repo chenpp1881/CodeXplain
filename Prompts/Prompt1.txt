@@ -1,0 +1,10 @@
+Below is an instruction that describes a specific perspective of a smart contract.
+
+### Instruction:
+Break down the following smart contract code into smaller components. Provide a step-by-step explanation of how each part contributes to the overall operation.
+
+### Input:
+This is Solidity code:
+```
+{context}
+```

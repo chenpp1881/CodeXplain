@@ -1,0 +1,10 @@
+Below is an instruction that describes a specific perspective of a smart contract.
+
+### Instruction:
+Explain how this smart contract interacts with other contracts or external entities. Detail how calls are made, and responses are handled within the code.
+
+### Input:
+This is Solidity code:
+```
+{context}
+```

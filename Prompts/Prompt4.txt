@@ -1,0 +1,10 @@
+Below is an instruction that describes a specific perspective of a smart contract.
+
+### Instruction:
+Explain the interaction between events and functions in the following smart contract code. Describe how events are emitted and how functions trigger these events.
+
+### Input:
+This is Solidity code:
+```
+{context}
+```

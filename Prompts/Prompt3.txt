@@ -1,0 +1,10 @@
+Below is an instruction that describes a specific perspective of a smart contract.
+
+### Instruction:
+Describe how state variables are managed in the following smart contract code. Explain how data is stored, modified, and accessed throughout the contract.
+
+### Input:
+This is Solidity code:
+```
+{context}
+```
