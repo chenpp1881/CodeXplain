@@ -23,7 +23,7 @@ class InformationFusionBlock(nn.Module):
 
     def forward(self, code_tokens, desc_tokens):
         code_embeddings = self.codeT5(**code_tokens).last_hidden_state
-        desc_tokens = self.codeT5(**code_tokens).last_hidden_state
+        desc_tokens = self.codeT5(**desc_tokens).last_hidden_state
 
         for layer_idx in range(self.num_layers):
             resnet = code_embeddings
