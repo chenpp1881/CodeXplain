@@ -8,54 +8,59 @@ logger = logging.getLogger(__name__)
 
 
 class CodeDataset(Dataset):
-    def __init__(self, codes, descriptions, labels, tokenizer, args):
-        self.codes = codes
-        self.descriptions = descriptions
-        self.labels = labels
+    def __init__(self, datas, tokenizer, args):
+        self.datas = datas
         self.tokenizer = tokenizer
         self.max_len = args.max_len
 
     def __len__(self):
-        return len(self.codes)
+        return len(self.datas)
+
+    def load_tokens(self,text):
+        text_tokens = self.tokenizer(text, padding='max_length', max_length=self.max_len, truncation=True,
+                                return_tensors="pt")
+        return {key: val.squeeze(0) for key, val in text_tokens.items()}
 
     def __getitem__(self, idx):
-        code = self.codes[idx]
-        desc = self.descriptions[idx]
-        label = self.labels[idx]
+        data = json.loads(self.datas[idx])
+        code = data['code']
+        label = 1 if data['label'] == "vulnerable" else 0
+
+        BFI = data['Basic Functionality Interpretation']
+        SSA = data['Step-by-Step Analysis']
+        CIA = data['Contract Interaction Analysis']
+        OAC = data['Ownership and Access Control']
+        GEE = data['Gas Efficiency Examination']
+        LFI = data['Logic and Flow Interpretation']
+        SMA = data['State Management Analysis']
+        EFI = data['Event and Function Interaction']
+        EHE = data['Error Handling and Exceptions']
 
         # Tokenize code
-        code_tokens = self.tokenizer(code, padding='max_length', max_length=self.max_len, truncation=True,
-                                     return_tensors="pt")
+        CODE = self.load_tokens(code)
+        BFI = self.load_tokens(BFI)
+        SSA = self.load_tokens(SSA)
+        CIA = self.load_tokens(CIA)
+        OAC = self.load_tokens(OAC)
+        GEE = self.load_tokens(GEE)
+        LFI = self.load_tokens(LFI)
+        SMA = self.load_tokens(SMA)
+        EFI = self.load_tokens(EFI)
+        EHE = self.load_tokens(EHE)
 
-        # Tokenize descriptions
-        desc_tokens = self.tokenizer(desc, padding='max_length', max_length=self.max_len, truncation=True,
-                                     return_tensors="pt")
-
-        # Convert to single tensors
-        code_tokens = {key: val.squeeze(0) for key, val in code_tokens.items()}
-        desc_tokens = {key: val.squeeze(0) for key, val in desc_tokens.items()}
-
-        return code_tokens, desc_tokens, torch.tensor(label, dtype=torch.long)
-
+        return CODE, [BFI, SSA, CIA, OAC, GEE, LFI, SMA, EFI, EHE], torch.tensor(label, dtype=torch.long)
 
 def load_data(args, stage):
     all_label = []
     all_code = []
     all_ex = []
     if stage == 'train':
-        path = r'../OurMethod/Data/train.json'
+        path = r'/share/chenyizhou05/DataFilterGPT/VD-data/contract_check/Filtered_DS/Solidity_train.jsonl'
     elif stage == 'test':
-        path = r'../OurMethod/Data/test.json'
+        path = r'/share/chenyizhou05/DataFilterGPT/VD-data/contract_check/Filtered_DS/Solidity_test.jsonl'
     else:
-        path = r'../OurMethod/Data/validation.json'
+        path = r'/share/chenyizhou05/DataFilterGPT/VD-data/contract_check/Filtered_DS/Solidity_val.jsonl'
     with open(path, 'r', encoding='utf-8') as f:
-        datas = json.load(f)
-
-    # iter dic
-    for file_id, file in datas.items():
-        for contract_id, contract in file.items():
-            all_code.append(contract['code'])
-            all_label.append(contract['lable'])
-            all_ex.append(contract['explanations'])
+        datas = f.readlines()
 
     return CodeDataset(all_code, all_ex, all_label, T5Tokenizer.from_pretrained(args.model_path), args.max_length)

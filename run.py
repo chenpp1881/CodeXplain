@@ -24,7 +24,7 @@ def parse_args():
     parser.add_argument('--epoch', type=int, default=50)
     parser.add_argument('--batch_size', type=int, default=16)
     parser.add_argument('--save_epoch', type=int, default=1)
-    parser.add_argument('--model_path', type=str, default=r'/data3/cyz/semi-sup/codet5/')
+    parser.add_argument('--model_path', type=str, default=r'Salesforce/codet5-base')
     parser.add_argument('--max_length', type=int, default=1024)
     parser.add_argument('--savepath', type=str, default='./Results')
     parser.add_argument('--resume', action='store_true')

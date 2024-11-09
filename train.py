@@ -63,7 +63,7 @@ class Trainer():
         torch.save({'state_dict': self.model.state_dict(),
                     'k': k,
                     'optimizer': self.optimizer.state_dict()},
-                   os.path.join(self.args.savepath, self.args.dataset,
+                    os.path.join(self.args.savepath, self.args.dataset,
                                 f'model_{k}.pth'))
         logger.info(f'save:{k}.pth')
 
