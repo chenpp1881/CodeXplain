@@ -4,6 +4,7 @@ from Multihead_Attention import DecoderAttention
 from SubLayerConnection import SublayerConnection
 from transformers import T5EncoderModel
 import random
+import pdb
 
 class InformationFusionBlock(nn.Module):
 
@@ -19,14 +20,15 @@ class InformationFusionBlock(nn.Module):
         for _layer in range(self.num_layers):
             self.self_attention.append(DecoderAttention(d_model=hidden))
             self.sublayer_connection1.append(SublayerConnection(size=hidden, dropout=dropout))
-            self.linear_layers.append(nn.Linear(in_features=args.hidden_dim, out_features=args.hidden_dim))
+            self.linear_layers.append(nn.Linear(in_features=hidden, out_features=hidden))
 
     def forward(self, code_tokens, desc_tokens):
         code_embeddings = self.codeT5(**code_tokens).last_hidden_state
+        # pdb.set_trace()
         desc_tokens = [self.codeT5(**des).last_hidden_state for des in desc_tokens]
         random.shuffle(desc_tokens)
 
-        for layer_idx in range(self.num_layers):
+        for layer_idx in range(len(desc_tokens)):
             resnet = code_embeddings
             code_embeddings = self.sublayer_connection1[layer_idx](code_embeddings,
                                                               lambda _code_embeddings: self.self_attention[

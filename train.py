@@ -1,6 +1,6 @@
 import logging
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3,4,5,6,7"
+os.environ["CUDA_VISIBLE_DEVICES"] = "3,4"
 import pandas as pd
 import torch
 import torch.optim as optim
@@ -42,11 +42,9 @@ class Trainer():
             args=args,
         )
         self.optimizer = optim.AdamW(IF.parameters(), lr=args.lr_IF)
-
-        self.cla_optimizer = optim.AdamW(IF.parameters(), lr=args.lr_2)
         self.criterion = torch.nn.CrossEntropyLoss().to(args.device)
 
-        IF = torch.nn.DataParallel(IF, device_ids=[0, 1, 2, 3, 4, 5, 6, 7])
+        IF = torch.nn.DataParallel(IF, device_ids=[0, 1])
         self.model = IF.to(args.device)
 
         self.results_data = []
@@ -69,9 +67,9 @@ class Trainer():
 
     def train_classicication(self, dataset):
         logging.info(f'Start classicition training!')
-        train_loader = DataLoader(dataset[0], batch_size=self.args.batch_size_IF, shuffle=True, drop_last=True)
-        validation_loader = DataLoader(dataset[1], batch_size=self.args.batch_size_IF, shuffle=True, drop_last=True)
-        for epoch in range(self.start_epoch, self.args.epoch_cla + self.start_epoch):
+        train_loader = DataLoader(dataset[0], batch_size=self.args.batch_size, shuffle=True, drop_last=True)
+        validation_loader = DataLoader(dataset[1], batch_size=self.args.batch_size, shuffle=True, drop_last=True)
+        for epoch in range(self.start_epoch, self.args.epoch + self.start_epoch):
             self.train_cla_epoch(epoch, train_loader)
             logging.info('Epoch %d finished' % epoch)
             f1 = self.eval_epoch(validation_loader)
@@ -93,14 +91,15 @@ class Trainer():
         pbar = tqdm(train_loader, total=len(train_loader))
         for i, (code_tokens, desc_tokens, label) in enumerate(pbar):
             outputs = self.model(code_tokens, desc_tokens)
+            label = label.to(self.args.device)
             loss = self.criterion(outputs, label)
 
             _, predicted = torch.max(outputs.data, dim=1)
             all_preds.extend(predicted)
             all_labels.extend(label)
-            self.cla_optimizer.zero_grad()
+            self.optimizer.zero_grad()
             loss.sum().backward()
-            self.cla_optimizer.step()
+            self.optimizer.step()
 
             loss_num += loss.sum().item()
 

@@ -5,6 +5,10 @@ import torch
 import argparse
 from data_utils import load_data
 from train import Trainer
+import sys
+import os
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)-15s %(levelname)s: %(message)s')
 logger = logging.getLogger(__name__)
@@ -22,9 +26,10 @@ def parse_args():
 
     # clip stage args
     parser.add_argument('--epoch', type=int, default=50)
-    parser.add_argument('--batch_size', type=int, default=16)
+    parser.add_argument('--lr_IF',type=float,default=1e-5)
+    parser.add_argument('--batch_size', type=int, default=4)
     parser.add_argument('--save_epoch', type=int, default=1)
-    parser.add_argument('--model_path', type=str, default=r'Salesforce/codet5-base')
+    parser.add_argument('--model_path', type=str, default='codet5-base')
     parser.add_argument('--max_length', type=int, default=1024)
     parser.add_argument('--savepath', type=str, default='./Results')
     parser.add_argument('--resume', action='store_true')
@@ -56,5 +61,3 @@ if __name__ == '__main__':
     # CL model
     trainer = Trainer(args)
     trainer.train_classicication([train_set,validation_set,test_set])
-
-

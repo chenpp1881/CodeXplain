@@ -1,6 +1,6 @@
 import torch
 from torch.utils.data import Dataset, DataLoader
-from transformers import T5Tokenizer, T5EncoderModel
+from transformers import AutoTokenizer, T5EncoderModel
 import logging
 import json
 
@@ -8,10 +8,10 @@ logger = logging.getLogger(__name__)
 
 
 class CodeDataset(Dataset):
-    def __init__(self, datas, tokenizer, args):
+    def __init__(self, datas, tokenizer, max_lenth):
         self.datas = datas
         self.tokenizer = tokenizer
-        self.max_len = args.max_len
+        self.max_len = max_lenth
 
     def __len__(self):
         return len(self.datas)
@@ -51,16 +51,13 @@ class CodeDataset(Dataset):
         return CODE, [BFI, SSA, CIA, OAC, GEE, LFI, SMA, EFI, EHE], torch.tensor(label, dtype=torch.long)
 
 def load_data(args, stage):
-    all_label = []
-    all_code = []
-    all_ex = []
     if stage == 'train':
-        path = r'VD-data/contract_check/Filtered_DS/Solidity_train.jsonl'
+        path = r'/share/chenyizhou05/DataFilterGPT/VD-data/contract_check/Filtered_DS/Solidity_train.jsonl'
     elif stage == 'test':
-        path = r'VD-data/contract_check/Filtered_DS/Solidity_test.jsonl'
+        path = r'/share/chenyizhou05/DataFilterGPT/VD-data/contract_check/Filtered_DS/Solidity_test.jsonl'
     else:
-        path = r'VD-data/contract_check/Filtered_DS/Solidity_val.jsonl'
+        path = r'/share/chenyizhou05/DataFilterGPT/VD-data/contract_check/Filtered_DS/Solidity_val.jsonl'
     with open(path, 'r', encoding='utf-8') as f:
         datas = f.readlines()
 
-    return CodeDataset(all_code, all_ex, all_label, T5Tokenizer.from_pretrained(args.model_path), args.max_length)
+    return CodeDataset(datas, AutoTokenizer.from_pretrained(args.model_path), args.max_length)
