@@ -52,11 +52,11 @@ class CodeDataset(Dataset):
 
 def load_data(args, stage):
     if stage == 'train':
-        path = r'/share/chenyizhou05/DataFilterGPT/VD-data/contract_check/Filtered_DS/Solidity_train.jsonl'
+        path = r'VD-data/contract_check/Filtered_DS/Solidity_train.jsonl'
     elif stage == 'test':
-        path = r'/share/chenyizhou05/DataFilterGPT/VD-data/contract_check/Filtered_DS/Solidity_test.jsonl'
+        path = r'VD-data/contract_check/Filtered_DS/Solidity_test.jsonl'
     else:
-        path = r'/share/chenyizhou05/DataFilterGPT/VD-data/contract_check/Filtered_DS/Solidity_val.jsonl'
+        path = r'VD-data/contract_check/Filtered_DS/Solidity_val.jsonl'
     with open(path, 'r', encoding='utf-8') as f:
         datas = f.readlines()
 
