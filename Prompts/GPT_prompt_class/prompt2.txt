@@ -1,0 +1,13 @@
+Below is an instruction that describes a classification task.
+Invent a naming label that aptly segregates items into vulnerable or safe classifications.
+
+### Instruction:
+Examine this Solidity script. Identify any potential security risks.
+
+### Input:
+Review the function {fn_name} in the blockchain contract {contract}:
+```Solidiy
+{context}
+```
+
+### Response:

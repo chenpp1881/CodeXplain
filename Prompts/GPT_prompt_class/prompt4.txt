@@ -1,0 +1,13 @@
+Below is an instruction that describes a classification task.
+Propose a label nomenclature that aptly differentiates between vulnerable and safe states.
+
+### Instruction:
+Evaluate the given Solidity function. Are there any security flaws?
+
+### Input:
+Inspect the subroutine {fn_name} from the decentralized contract {contract}:
+```Solidiy
+{context}
+```
+
+### Response:

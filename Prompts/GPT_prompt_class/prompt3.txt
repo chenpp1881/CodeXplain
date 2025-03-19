@@ -1,0 +1,13 @@
+Below is an instruction that describes a classification task.
+Formulate a label descriptor that bifurcates objects into categories of vulnerable and safe.
+
+### Instruction:
+Please assess the provided Solidity code for any security vulnerabilities.
+
+### Input:
+Check the procedure {fn_name} in the digital contract {contract}:
+```Solidiy
+{context}
+```
+
+### Response:

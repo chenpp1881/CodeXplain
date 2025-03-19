@@ -1,0 +1,13 @@
+Below is an instruction that describes a classification task.
+Suggest a label designation that clearly identifies an item's status as either vulnerable or safe.
+
+### Instruction:
+Inspect the following Solidity code. Determine if there are any vulnerabilities present.
+
+### Input:
+Observe the method {fn_name} within the smart contract {contract}:
+```Solidiy
+{context}
+```
+
+### Response:
