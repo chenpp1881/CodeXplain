@@ -6,6 +6,7 @@ Automated detection of smart contract vulnerabilities.
 
 # Datasets
 We use the same dataset as [Ma et al., 2024](https://sites.google.com/view/iaudittool/home). Further instructions on the dataset can be found on [Smart-Contract-Dataset](https://drive.google.com/drive/folders/1cAHxSu6dL3S21zz2iaQzSTABfSjY2vP8). 
+All the source codes and their explanations can be obtained at [deepseek-coder.json](https://github.com/chenpp1881/CodeXplain/blob/main/data/deepseek-coder.jsonl).
 
 # Running
 To run program, please use this command: python `run.py`.
